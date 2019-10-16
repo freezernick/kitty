@@ -84,6 +84,7 @@
     <Compile Include="High\KittyHighWhiteSpace.cs" />
     <Compile Include="High\KityHighBlitzMax.cs" />
     <Compile Include="High\KittyHighVB.cs" />
+    <Compile Include="High\KittyHighMD.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
