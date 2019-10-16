@@ -215,8 +215,11 @@ namespace Kitty {
             KeyWords.Add("Until");
             KeyWords.Add("Where");
             KeyWords.Add("Yield");
-
-            // Region & External Source
+            
+            KeyWords.Add("#");
+            KeyWords.Add("Region");
+            KeyWords.Add("ExternalSource");
+            KeyWords.Add("End");
         }
 
     }
