@@ -24,6 +24,12 @@ namespace Kitty {
         public KittyHighMD() {
             Langs["md"] = this;
             Language = "MarkDown";
+            stringstart = "`";
+            stringend = "`";
+            KeyWords.Add("#");
+            KeyWords.Add("=");
+            KeyWords.Add("-");
+            KeyWords.Add("~~");
         }
     }
 }
