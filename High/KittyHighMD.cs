@@ -30,6 +30,7 @@ namespace Kitty {
             KeyWords.Add("=");
             KeyWords.Add("-");
             KeyWords.Add("~~");
+            KeyWords.Add(">");
         }
     }
 }
