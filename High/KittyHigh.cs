@@ -233,7 +233,7 @@ namespace Kitty {
         protected string stringstart = "\"";
         protected string stringend = "\"";
         protected bool mulcomment = true;
-        protected string mulcommentstart = "<--";
+        protected string mulcommentstart = "<!--";
         protected string mulcommentend = "-->";
         protected string opentagchar = "<";
         protected string closetagchar = ">";
@@ -258,12 +258,52 @@ namespace Kitty {
             {
                 if (linenumbers) LineNumber(i + 1);
                 word = "";
+                var singstring = false;
+                var stringescape = false;
+                bool wassingstring;
 
                 for (int p = 0; p < lines[i].Length; p++)
                 {
                     var ch = lines[i][p];
-                    if ((ch == '<') || (ch == '>') || (ch == '/') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '_' || (ch >= '0' && ch <= '9'))
+
+                    wassingstring = singstring;
+                    singstring = singstring || (p < lines[i].Length - 1 && lines[i].Substring(p, stringstart.Length) == stringstart);
+
+                    if (singstring)
+                    {
+                        Console.ForegroundColor = KittyColors.String;
+                        Console.Write($"{ch}");
+                        if (wassingstring && p < lines[i].Length && lines[i].Substring(p, stringend.Length) == stringend && !stringescape)
+                            singstring = false;
+                        else
+                            stringescape = ch == escape && !stringescape;
+                    }
+
+                    else if (word == "" && ch == '<')
+                    {
                         word += $"{ch}";
+                        int q = p;
+                        bool inline = true;
+                        while (inline)
+                        {
+                            q++;
+                            if (lines[i][q] == ' ' && lines[i][q + 1] != '/')
+                            {
+                                p = q - 1;
+                                inline = false;
+                            }
+                            else if (lines[i][q] == '>')
+                            {
+                                word += lines[i][q];
+                                p = q;
+                                inline = false;
+                            }
+                            else
+                            {
+                                word += lines[i][q];
+                            }
+                        }
+                    }
                     else
                     {
                         if (word != "") showword(); word = $"{ch}"; showword(); word = "";
